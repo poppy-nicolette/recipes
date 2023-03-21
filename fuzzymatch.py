@@ -3,17 +3,17 @@ from fuzzywuzzy import process
 import pandas as pd
 from cleanup import cleanup
 
-#function to pass in cleaned_list
-def fuzzymatch(x):
 
-    #import food items into a list to extract only food items
+# function to pass in cleaned_list
+def fuzzymatch(x):
+    # import food items into a list to extract only food items
     df2 = pd.read_csv("food_list.csv")
 
     # convert to list...why? just following the example so far...
     list1 = x
     list2 = df2["Food Type"].tolist()
 
-    #cleanup list2 which is our imported food_thesaurus
+    # cleanup list2 which is our imported food_thesaurus
     list2 = cleanup(list2)
 
     # empty lists for storing the matches later
@@ -24,9 +24,9 @@ def fuzzymatch(x):
     # it's closest match from list2
     for i in list1:
         mat1.append(process.extract(i, list2, limit=2))
-    
+
     df1 = pd.DataFrame(list1)
-    df1.rename(columns = {0:'item'}, inplace = True)
+    df1.rename(columns={0: 'item'}, inplace=True)
     df1['matches'] = mat1
 
     # iterating through the closest
@@ -40,11 +40,10 @@ def fuzzymatch(x):
         for k in j:
             if k[1] >= threshold:
                 p.append(k[0])
-              
+
         mat2.append(",".join(p))
 
-      
-    # storing the resultant matches 
+    # storing the resultant matches
     # back to dframe1
     df1['matches'] = mat2
 
@@ -52,7 +51,7 @@ def fuzzymatch(x):
     df3 = df1[df1.filter(['matches']).matches.str.contains('NaN') == False]
     df3.reset_index(drop=True, inplace=True)
 
-    #add system date
+    # add system date
     date = pd.Timestamp.today().strftime('%Y-%m-%d')
     df3 = df3.assign(date=date)
     return df3
