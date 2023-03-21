@@ -1,5 +1,1 @@
-pytesseract
-pillow
-pandas
-fuzzywuzzy
-regex
+tesseract-ocr
