@@ -1,5 +1,0 @@
-pytesseract
-pillow
-pandas
-fuzzywuzzy
-regex
