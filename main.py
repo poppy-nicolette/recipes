@@ -4,12 +4,62 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import linear_kernel
 from sklearn.feature_extraction.text import TfidfVectorizer
-from pages import makeMeals
+
+import pandas as pd
+import streamlit as st
+import pytesseract
+from receipt_reader import ocr
+from cleanup import cleanup
+
+from fuzzymatch import fuzzymatch
 
 import nltk
 import string
+from pages.OCR import inventory
+
+pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract'
 
 st.title("Welcome to Recipe Recommendation System")
+st.write("Starting OCR...")
+
+#import receipt_reader
+
+
+# Call function
+textlist = ocr().split('\n')
+st.write("Finished reading receipt")
+
+#clean up text of numbers, punctuation, and blank lines
+
+
+cleaned_list = cleanup(textlist)
+#print(cleaned_list)
+st.write("Finished cleaning receipt items")
+
+
+
+#fuzzy matching - fuzzymatch returns a pandas dataframe
+
+
+df_matched = fuzzymatch(cleaned_list)
+st.write("Finished identifying food items")
+
+#concat temporary inventory df_matched with inventory
+#concat will add items to inventory, whereas df_matched is overwritten each time
+#future version - should save out inventory and read in so that it can be added to but not overwritten
+
+
+inventory = pd.DataFrame(columns=['item', 'matches', 'date'])
+inventory = pd.concat([inventory, df_matched])
+
+st.write("These are the food items you purchased:")
+
+inventory["matches"]
+recipe_list = inventory["matches"].values.tolist()
+
+
+
+
 
 #reads the csv file from the system
 data = pd.read_csv("recipe.csv")
@@ -69,12 +119,29 @@ def recipe_recommendation(data, sim):
 my_count = 1
 my_meal = []
 
+
+def listToString(s):
+    # initialize an empty string
+    str1 = ""
+
+    # traverse in the string
+    for ele in s:
+        str1 += ele
+
+    # return string
+    return str1
+
+
+# Driver code
+recipe_list_str=listToString(recipe_list)
+
+
 ingred = recNew['ingredients'][3]
 steps = recNew['steps'][3]
 meals_rec = recipe_recommendation(recNew["name"][3], ingredient_consin_sim)
 np.array(steps).tolist()
-st.write("The following ingredients have been received: \n", ingred) #displayed when the button is clicked
-
+ #displayed when the button is clicked
+#st.write(recipe_list)
 
 def makeMeal():
     st.write("Meals recommendation for the above ingredients include:")

@@ -13,7 +13,7 @@ def ocr():
         if files.endswith(ext):
             print("Processing:  " + files)
             image_list.append(files)
-            print("welcome")
+
         else:
             continue
 
