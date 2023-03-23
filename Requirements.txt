@@ -1,5 +1,8 @@
+Tesseract-ocr
 pytesseract=0.3.10
 pillow=9.4.0
 pandas=1.5.3
 fuzzywuzzy=0.18.0
 regex=2022.7.9
+scikit-learn==0.24.2
+
