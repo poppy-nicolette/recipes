@@ -1,11 +1,16 @@
+"""
+reference for pytesseract
+https://pypi.org/project/pytesseract/
+It may be necessary to specify the tesseract executable on your local path
+"""
+#!pip install pytesseract
+
 import os
 import pytesseract as ts
 from PIL import Image, ImageFilter
 
-
 def ocr():
     #find all image files in list, jpg or png
-    # try except error by pass
     path_of_the_directory = os.getcwd()
     ext = ('.jpg', '.png')
     image_list = []
@@ -13,7 +18,6 @@ def ocr():
         if files.endswith(ext):
             print("Processing:  " + files)
             image_list.append(files)
-
         else:
             continue
 
@@ -24,13 +28,12 @@ def ocr():
 
         #convert image to string
         text=ts.image_to_string(img)
-        #print(text)
         return text
-        # part str at \n
-        #text_list = text.split('\n')
-        text_list=text
+
     return text_list
     print(text_list)
 
-  #straight from the image as a list of items
   # the list approach keeps the order and relevant tokens together
+
+
+
