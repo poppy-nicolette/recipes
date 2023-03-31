@@ -19,7 +19,7 @@ from pages.OCR import inventory
 
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract'
 
-st.title("Welcome to Recipe Recommendation System")
+st.title("Welcome to the Recipe Recommendation System")
 st.write("Starting OCR...")
 
 #import receipt_reader
@@ -54,8 +54,8 @@ inventory = pd.concat([inventory, df_matched])
 
 st.write("These are the food items you purchased:")
 
-inventory["matches"]
-recipe_list = inventory["matches"].values.tolist()
+inventory["item"]
+recipe_list = inventory["item"].values.tolist()
 
 
 
