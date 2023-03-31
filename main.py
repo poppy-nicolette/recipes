@@ -1,5 +1,5 @@
 #updated 20230331 to include scikit-learn
-#sudo apt install scikit-learn 
+sudo apt-get install python3-sklearn python3-sklearn-lib python3-sklearn-doc
 import streamlit as st
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
