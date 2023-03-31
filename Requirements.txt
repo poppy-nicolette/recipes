@@ -5,6 +5,7 @@ fuzzywuzzy=0.18.0
 regex=2022.7.9
 streamlit=1.20.0
 sklearn
+scikit-learn
 numpy
 cosine_similarity
 pandas
